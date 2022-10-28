@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use Illuminate\Http\Request;
+use App\Http\Requests\DepartmentRequest;
+use Illuminate\Support\Facades\Redirect;
+// use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 
 class DepartmentController extends Controller
@@ -30,6 +33,7 @@ class DepartmentController extends Controller
     public function create()
     {
         //
+        return Inertia::render('Departments/Create');
     }
 
     /**
@@ -38,9 +42,12 @@ class DepartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DepartmentRequest $request)
     {
         //
+        Department::create($request->all());
+        
+        return Redirect::route('departments.index')->with('success', 'Department created');
     }
 
     /**
@@ -72,7 +79,7 @@ class DepartmentController extends Controller
      * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Department $department)
+    public function update(DepartmentRequest $request, Department $department)
     {
         //
     }

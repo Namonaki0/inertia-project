@@ -1,9 +1,10 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
-import BreezeTc from "@/components/TableColumn.vue";
-import BreezeTable from "@/components/Table.vue";
+import BreezeTc from "@/Components/TableColumn.vue";
+import BreezeTable from "@/Components/Table.vue";
 import BreezePagination from "@/Components/Pagination.vue"
+import BreezeLink from "@/Components/AnchorLink.vue"
 
 </script>
 
@@ -22,6 +23,10 @@ import BreezePagination from "@/Components/Pagination.vue"
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
             <!-- {{$page.props.departments}} -->
+            <div class="flex items-center justify-end mb-6">
+              <breeze-link :href="route('departments.create')">Create Department</breeze-link>
+
+            </div>
             <breeze-table>
               <template #header>
                 <breeze-tc class="border px-4 py-2">Name</breeze-tc>
