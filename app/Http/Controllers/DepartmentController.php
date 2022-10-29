@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use App\Http\Requests\DepartmentRequest;
 use Illuminate\Support\Facades\Redirect;
-// use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 
 class DepartmentController extends Controller
@@ -70,6 +70,14 @@ class DepartmentController extends Controller
     public function edit(Department $department)
     {
         //
+        return Inertia::render('Departments/Edit', [
+            'department' => [
+                'id' => $department->id,
+                'name' => $department->name,
+                'email' => $department->email,
+                'phone' => $department->phone,
+            ]
+            ]);
     }
 
     /**
@@ -82,6 +90,8 @@ class DepartmentController extends Controller
     public function update(DepartmentRequest $request, Department $department)
     {
         //
+        $department->update($request->all());
+        return Redirect::route('departments.index')->with('success', 'Department updated');
     }
 
     /**
@@ -93,5 +103,7 @@ class DepartmentController extends Controller
     public function destroy(Department $department)
     {
         //
+        $department->delete();
+        return Redirect::route('departments.index')->with('success', 'Department deleted');
     }
 }

@@ -14,21 +14,27 @@ import { Inertia } from "@inertiajs/inertia";
 // import { useForm } from '@inertiajs/inertia-vue3'
 import { useForm } from '@inertiajs/inertia-vue3'
 
+const props = defineProps({
+    department: {
+        type: Object
+    },
+})
+
 const form = useForm({
-      name: null,
-      email: null,
-      phone: null,
+      name: props.department.name,
+      email: props.department.email,
+      phone: props.department.phone,
     })
 
-function submit(el) {
-  Inertia.post(route('departments.store'), form);
-  console.log(el)
+function submit() {
+  form.put(route('departments.update', props.department.id));
+  console.log(props.department.id)
 }
 
-function resetForm() {
-  form.clearErrors();
-  form.reset();
-}
+// function resetForm() {
+//   form.clearErrors();
+//   form.reset();
+// }
 </script>
 
 <template>
@@ -36,7 +42,7 @@ function resetForm() {
 
   <AuthenticatedLayout>
     <template #header>
-      <breeze-heading>Create New Department</breeze-heading>
+      <breeze-heading>Edit Department - {{form.name}}</breeze-heading>
     </template>
 
     <div class="py-12">
@@ -84,7 +90,7 @@ function resetForm() {
               </div>
               <!-- submit -->
               <div class="flex items-center justify-end mt-4">
-                <breeze-reset-button @click="resetForm">reset</breeze-reset-button>
+                <breeze-reset-button>reset</breeze-reset-button>
                 <breeze-button 
                 :loading="form.processing" 
                 :class="{'opacity-25' : form.processing}"
